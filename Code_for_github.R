@@ -2,6 +2,7 @@
 # Script showing the data analysis: descriptive as well as statistical modeling of the #
 # project "Reproduction of East-African bats may guide risk mitigation for coronavirus #
 # spillover" published in the Journal One health Outlook                               #  
+# Author: Diego Montecino-Latorre                                                      #  
 # ------------------------------------------------------------------------------------ #
 
 #---load packages needed ---#
@@ -19,12 +20,14 @@ library("rstanarm")
 library("loo")
 library("stringr")
 
+# ---download data (constructed in Bats/Chapter 2/Data analysis/code to construct dataset) ---#
 
+download.file(url="https://ndownloader.figshare.com/files/20411751",
+              destfile = "/bats.csv")
 
-# ---load data (constructed in Bats/Chapter 2/Data analysis/code to construct dataset) ---#
+# ---load data---#
 
-bats=
-
+bats=read.csv("/bats.csv")
 
 # --- some descriptives ---#
 
