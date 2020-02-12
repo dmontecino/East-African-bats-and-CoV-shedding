@@ -300,13 +300,16 @@ season_cat[i] ~ bernoulli(softmax(p)[1]);
 // x missing model the category and posteiorly model the binary outcome as a function of the imputed category
 else {
 
-vector[2] log_lik_cats; // vector to hold the log probabilities for each alternate scenario (category 1, 2, or 3)
+//vector[2] log_lik_cats; // vector to hold the log probabilities for each alternate scenario (category 1, 2, or 3)
 
-log_lik_cats[1] = softmax(p)[1] + bernoulli_logit_lpmf( CoV[i] | alpha + beta_rec_weaned + beta_age*age[i] + beta_eid*eid[i] + theta_site[index_sampling[i]] + theta_species[index_species[i]]);  // category 1: recently weaned
-log_lik_cats[2] = softmax(p)[1] + bernoulli_logit_lpmf( CoV[i] | alpha + beta_age*age[i] + beta_eid*eid[i] + theta_site[index_sampling[i]] + theta_species[index_species[i]]);  // category 0: not recently weaned
+//log_lik_cats[1] = softmax(p)[1] + bernoulli_logit_lpmf( CoV[i] | alpha + beta_rec_weaned + beta_age*age[i] + beta_eid*eid[i] + theta_site[index_sampling[i]] + theta_species[index_species[i]]);  // category 1: recently weaned
+//log_lik_cats[2] = softmax(p)[1] + bernoulli_logit_lpmf( CoV[i] | alpha + beta_age*age[i] + beta_eid*eid[i] + theta_site[index_sampling[i]] + theta_species[index_species[i]]);  // category 0: not recently weaned
 
 
-target += log_sum_exp(log_lik_cats); // sum log probabilities across the scenarios (i.e., marginalize over missingness)
+//target += log_sum_exp(log_lik_cats); // sum log probabilities across the scenarios (i.e., marginalize over missingness)
+target += log_mix(softmax(p)[1],
+                  bernoulli_logit_lpmf( CoV[i] | alpha + beta_rec_weaned + beta_age*age[i] + beta_eid*eid[i] + theta_site[index_sampling[i]] + theta_species[index_species[i]]),
+                  bernoulli_logit_lpmf( CoV[i] | alpha + beta_age*age[i] + beta_eid*eid[i] + theta_site[index_sampling[i]] + theta_species[index_species[i]]));
 }
 }
 } // close model block
