@@ -367,7 +367,7 @@ dat <- list(N = N,
 
 stan.model.season.age.species.sites.eid=stan(model_code = modelstring,  
                                              iter = 4000, warmup = 3000, #thin=1,
-                                             chains = , cores = 1,
+                                             chains = 4, cores = 4,
                                              data = dat,
                                              control=list(adapt_delta=0.995, max_treedepth = 15))
 
